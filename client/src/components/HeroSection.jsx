@@ -1,68 +1,134 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-export default function HeroSection() {
-  const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
-  const [message, setMessage] = useState('');
+const HeroSection = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+  });
+
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     try {
-      const response = await fetch('http://localhost:5000/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+      const response = await fetch("http://localhost:5000/api/leads", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
-      
+
       const data = await response.json();
+
       if (response.ok) {
-        setMessage('Success! We will contact you shortly.');
-        setFormData({ name: '', email: '', phone: '' });
+        setMessage("Successfully registered for free trial.");
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+        });
       } else {
-        setMessage(data.error || 'Something went wrong.');
+        setMessage(data.error || "Something went wrong.");
       }
-    } catch (err) {
-      setMessage('Server error. Please try again later.');
+    } catch (error) {
+      setMessage("Server error. Please try again later.");
     }
+
+    setLoading(false);
   };
 
   return (
-    <div className="relative min-h-screen bg-gray-900 flex flex-col items-center justify-center text-center pt-20">
-      <div className="absolute inset-0 bg-black opacity-70"></div>
-      
-      <div className="relative z-10 px-4 w-full max-w-4xl">
-        <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-6 uppercase tracking-wider">
-          Forge Your <span className="text-yellow-500">Legacy</span>
-        </h1>
-        <p className="text-lg md:text-2xl text-gray-300 mb-12">
-          Join the elite. Access world-class equipment and a community of champions.
-        </p>
+    <section className="relative min-h-screen flex items-center justify-center px-6 pt-32 pb-20 overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(255,208,0,0.18),transparent_35%)]" />
 
-        {/* Lead Capture Form */}
-        <div className="bg-gray-800 p-8 rounded-lg shadow-2xl max-w-md mx-auto border border-gray-700">
-          <h2 className="text-2xl font-bold text-yellow-500 mb-6">Claim 1-Day Free Trial</h2>
-          <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-            <input 
-              type="text" placeholder="Full Name" required
-              value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})}
-              className="p-3 rounded bg-gray-900 text-white border border-gray-600 focus:border-yellow-500 focus:outline-none"
-            />
-            <input 
-              type="email" placeholder="Email Address" required
-              value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})}
-              className="p-3 rounded bg-gray-900 text-white border border-gray-600 focus:border-yellow-500 focus:outline-none"
-            />
-            <input 
-              type="tel" placeholder="Phone Number"
-              value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})}
-              className="p-3 rounded bg-gray-900 text-white border border-gray-600 focus:border-yellow-500 focus:outline-none"
-            />
-            <button type="submit" className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 rounded transition duration-300">
-              Get Started
+      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
+        {/* Left Side */}
+        <div>
+          <p className="uppercase tracking-[6px] text-yellow-400 text-sm mb-6">
+            Transform Your Body
+          </p>
+
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-black leading-[1.05] mb-8">
+            Train Hard.
+            <br />
+            Become <span className="text-yellow-400">Unstoppable.</span>
+          </h1>
+
+          <p className="text-gray-300 text-lg md:text-xl leading-relaxed max-w-2xl mb-10">
+            Experience elite-level fitness with cutting-edge equipment,
+            certified trainers, nutrition guidance, and a motivating premium
+            environment.
+          </p>
+
+          <div className="flex flex-wrap gap-5 mb-12">
+            <button className="bg-yellow-400 text-black px-8 py-4 rounded-full font-bold hover:scale-105 transition-all duration-300 shadow-lg shadow-yellow-500/20">
+              Start Free Trial
             </button>
-          </form>
-          {message && <p className="mt-4 text-sm font-semibold text-white">{message}</p>}
+            <button className="border border-white/20 text-white px-8 py-4 rounded-full font-bold hover:bg-white/10 transition-all duration-300">
+              Learn More
+            </button>
+          </div>
+        </div>
+
+        {/* Right Side */}
+        <div className="relative">
+          <div className="bg-white/5 rounded-[2rem] p-8 backdrop-blur-xl border border-white/10 shadow-2xl">
+            <h2 className="text-3xl font-bold text-white mb-6">Free Trial</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
+                placeholder="Name"
+                className="w-full rounded-full border border-white/20 bg-transparent px-5 py-4 text-white outline-none focus:border-yellow-400"
+                required
+              />
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+                placeholder="Email"
+                className="w-full rounded-full border border-white/20 bg-transparent px-5 py-4 text-white outline-none focus:border-yellow-400"
+                required
+              />
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={(e) =>
+                  setFormData({ ...formData, phone: e.target.value })
+                }
+                placeholder="Phone"
+                className="w-full rounded-full border border-white/20 bg-transparent px-5 py-4 text-white outline-none focus:border-yellow-400"
+                required
+              />
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full rounded-full bg-yellow-400 px-5 py-4 font-bold text-black transition hover:scale-105"
+              >
+                {loading ? "Submitting..." : "Get Free Trial"}
+              </button>
+            </form>
+            {message && (
+              <p className="mt-4 text-sm text-green-300">{message}</p>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
-}
+};
+
+export default HeroSection;
