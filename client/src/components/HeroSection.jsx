@@ -1,131 +1,143 @@
 import React, { useState } from "react";
 
 const HeroSection = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-  });
-
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setMessage("");
 
     try {
+      // Connects cleanly to your leadController.js backend endpoint
       const response = await fetch("http://localhost:5000/api/leads", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
-
       if (response.ok) {
-        setMessage("Successfully registered for free trial.");
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-        });
+        setMessage("🎉 Your 7-Day Free Pass has been reserved! Check your email.");
+        setFormData({ name: "", email: "", phone: "" });
       } else {
-        setMessage(data.error || "Something went wrong.");
+        setMessage("❌ Something went wrong. Please try again.");
       }
     } catch (error) {
-      setMessage("Server error. Please try again later.");
+      setMessage("❌ Network error. Please check your backend connection.");
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center px-6 pt-32 pb-20 overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(255,208,0,0.18),transparent_35%)]" />
+    <section className="relative bg-black text-white min-h-[90vh] flex items-center overflow-hidden py-12 px-6 lg:px-16">
+      {/* Background abstract gradient accents */}
+      <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-orange-600/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
-        {/* Left Side */}
-        <div>
-          <p className="uppercase tracking-[6px] text-yellow-400 text-sm mb-6">
-            Transform Your Body
-          </p>
-
-          <h1 className="text-5xl sm:text-6xl md:text-7xl font-black leading-[1.05] mb-8">
-            Train Hard.
-            <br />
-            Become <span className="text-yellow-400">Unstoppable.</span>
+      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+        
+        {/* Left Side: Copy and Impact Stats */}
+        <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
+          <span className="inline-block bg-orange-600/20 text-orange-500 text-sm font-semibold tracking-wider uppercase px-4 py-1.5 rounded-full border border-orange-500/30">
+            Crush Your Fitness Goals
+          </span>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+            Transform Your Body. <br />
+            <span className="bg-gradient-to-r from-orange-500 to-amber-400 bg-clip-text text-transparent">
+              Unleash Your Power.
+            </span>
           </h1>
-
-          <p className="text-gray-300 text-lg md:text-xl leading-relaxed max-w-2xl mb-10">
-            Experience elite-level fitness with cutting-edge equipment,
-            certified trainers, nutrition guidance, and a motivating premium
-            environment.
+          <p className="text-gray-400 text-lg max-w-xl mx-auto lg:mx-0">
+            Get access to premium local gym floors, certified personal trainers, and high-intensity group fitness classes tailored to your schedule.
           </p>
 
-          <div className="flex flex-wrap gap-5 mb-12">
-            <button className="bg-yellow-400 text-black px-8 py-4 rounded-full font-bold hover:scale-105 transition-all duration-300 shadow-lg shadow-yellow-500/20">
-              Start Free Trial
-            </button>
-            <button className="border border-white/20 text-white px-8 py-4 rounded-full font-bold hover:bg-white/10 transition-all duration-300">
-              Learn More
-            </button>
+          {/* Social Proof Trust Metrics */}
+          <div className="grid grid-cols-3 gap-4 pt-4 max-w-md mx-auto lg:mx-0 border-t border-gray-800">
+            <div>
+              <p className="text-2xl sm:text-3xl font-bold text-orange-500">5k+</p>
+              <p className="text-xs text-gray-400 uppercase tracking-wider mt-1">Active Members</p>
+            </div>
+            <div>
+              <p className="text-2xl sm:text-3xl font-bold text-white">20+</p>
+              <p className="text-xs text-gray-400 uppercase tracking-wider mt-1">Certified Coaches</p>
+            </div>
+            <div>
+              <p className="text-2xl sm:text-3xl font-bold text-white">4.9/5</p>
+              <p className="text-xs text-gray-400 uppercase tracking-wider mt-1">Google Rating</p>
+            </div>
           </div>
         </div>
 
-        {/* Right Side */}
-        <div className="relative">
-          <div className="bg-white/5 rounded-[2rem] p-8 backdrop-blur-xl border border-white/10 shadow-2xl">
-            <h2 className="text-3xl font-bold text-white mb-6">Free Trial</h2>
+        {/* Right Side: Free Pass Conversion Lead Form Card */}
+        <div className="lg:col-span-5">
+          <div className="bg-gray-900/80 backdrop-blur-md border border-gray-800 rounded-2xl p-6 sm:p-8 shadow-2xl transition-all duration-300 hover:border-gray-700">
+            <h3 className="text-xl font-bold text-white text-center mb-2">Claim Your Free 7-Day Pass</h3>
+            <p className="text-sm text-gray-400 text-center mb-6">Limited slots available this week. No credit card required.</p>
+
             <form onSubmit={handleSubmit} className="space-y-4">
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-                placeholder="Name"
-                className="w-full rounded-full border border-white/20 bg-transparent px-5 py-4 text-white outline-none focus:border-yellow-400"
-                required
-              />
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-                placeholder="Email"
-                className="w-full rounded-full border border-white/20 bg-transparent px-5 py-4 text-white outline-none focus:border-yellow-400"
-                required
-              />
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={(e) =>
-                  setFormData({ ...formData, phone: e.target.value })
-                }
-                placeholder="Phone"
-                className="w-full rounded-full border border-white/20 bg-transparent px-5 py-4 text-white outline-none focus:border-yellow-400"
-                required
-              />
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Full Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  required
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="John Doe"
+                  className="w-full bg-black border border-gray-800 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 text-white placeholder-gray-600 rounded-lg px-4 py-2.5 outline-none transition-all"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Email Address</label>
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="john@example.com"
+                  className="w-full bg-black border border-gray-800 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 text-white placeholder-gray-600 rounded-lg px-4 py-2.5 outline-none transition-all"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Phone Number</label>
+                <input
+                  type="tel"
+                  name="phone"
+                  required
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder="+1 (555) 000-0000"
+                  className="w-full bg-black border border-gray-800 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 text-white placeholder-gray-600 rounded-lg px-4 py-2.5 outline-none transition-all"
+                />
+              </div>
+
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full rounded-full bg-yellow-400 px-5 py-4 font-bold text-black transition hover:scale-105"
+                className="w-full mt-2 bg-gradient-to-r from-orange-600 to-amber-500 hover:from-orange-500 hover:to-amber-400 text-black font-bold uppercase tracking-wider text-sm py-3 px-4 rounded-lg shadow-lg hover:shadow-orange-500/20 active:scale-[0.99] transition-all disabled:opacity-50"
               >
-                {loading ? "Submitting..." : "Get Free Trial"}
+                {loading ? "Processing..." : "Get My Free Pass"}
               </button>
             </form>
+
             {message && (
-              <p className="mt-4 text-sm text-green-300">{message}</p>
+              <div className="mt-4 p-3 rounded-lg bg-black border border-gray-800 text-center text-sm font-medium animate-fadeIn">
+                {message}
+              </div>
             )}
           </div>
         </div>
+
       </div>
     </section>
   );
