@@ -391,22 +391,56 @@ function FeaturesAndPlansSection() {
 // ==========================================
 // 6. BEFORE/AFTER TRANSFORMATION SECTION
 // ==========================================
-function BeforeAfterSlider() {
+function BeforeAfterSlider({ beforeImage, afterImage }) {
   const [position, setPosition] = useState(50);
+  
   return (
-    <div className="relative w-full h-56 sm:h-64 rounded-xl overflow-hidden bg-gray-900 select-none group shadow-inner border border-gray-800">
-      <div className="absolute inset-0 bg-gradient-to-br from-orange-950/60 to-black flex items-center justify-end px-8">
-        <span className="text-orange-500 font-black tracking-[0.2em] text-3xl sm:text-5xl opacity-20 uppercase">After</span>
+    <div className="relative w-full h-64 sm:h-80 rounded-xl overflow-hidden bg-gray-900 select-none group shadow-inner border border-gray-800">
+      
+      {/* AFTER State (Background Image) */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center flex items-end justify-end p-4"
+        style={{ backgroundImage: `url(${afterImage})` }}
+      >
+        <span className="bg-black/60 backdrop-blur text-orange-500 font-black tracking-widest text-xs px-3 py-1 rounded uppercase">
+          After
+        </span>
       </div>
-      <div className="absolute inset-y-0 left-0 bg-gradient-to-tr from-gray-800 to-black flex items-center justify-start px-8 overflow-hidden shadow-[4px_0_15px_rgba(0,0,0,0.5)] z-10" style={{ width: `${position}%` }}>
-         <div className="absolute left-8">
-           <span className="text-gray-500 font-black tracking-[0.2em] text-3xl sm:text-5xl opacity-20 uppercase">Before</span>
+
+      {/* BEFORE State (Foreground Image, clipped by slider) */}
+      <div 
+        className="absolute inset-y-0 left-0 overflow-hidden shadow-[4px_0_15px_rgba(0,0,0,0.8)] z-10" 
+        style={{ width: `${position}%` }}
+      >
+         <div 
+           className="absolute inset-0 h-full bg-cover bg-center flex items-end justify-start p-4"
+           style={{ backgroundImage: `url(${beforeImage})`, width: '100vw', maxWidth: '100%' }}
+         >
+           <span className="bg-black/60 backdrop-blur text-gray-300 font-black tracking-widest text-xs px-3 py-1 rounded uppercase">
+             Before
+           </span>
          </div>
       </div>
-      <input type="range" min="0" max="100" value={position} onChange={(e) => setPosition(e.target.value)} className="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-30" />
-      <div className="absolute top-0 bottom-0 w-0.5 bg-orange-500 pointer-events-none flex items-center justify-center z-20" style={{ left: `calc(${position}% - 1px)` }}>
+
+      {/* Invisible HTML Range Input for Mobile/Desktop dragging */}
+      <input 
+        type="range" 
+        min="0" 
+        max="100" 
+        value={position} 
+        onChange={(e) => setPosition(e.target.value)} 
+        className="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-30" 
+      />
+
+      {/* Custom Draggable Line & Thumb */}
+      <div 
+        className="absolute top-0 bottom-0 w-0.5 bg-orange-500 pointer-events-none flex items-center justify-center z-20" 
+        style={{ left: `calc(${position}% - 1px)` }}
+      >
         <div className="w-8 h-8 bg-black rounded-full shadow-[0_0_15px_rgba(234,88,12,0.5)] flex items-center justify-center border-2 border-orange-500 text-orange-500 group-hover:scale-110 transition-transform">
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M8 9l-4 4 4 4m8-8l4 4-4 4" /></svg>
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M8 9l-4 4 4 4m8-8l4 4-4 4" />
+          </svg>
         </div>
       </div>
     </div>
@@ -424,6 +458,7 @@ function TransformationsSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          
           {/* Card 1 */}
           <div className="bg-gray-950/50 backdrop-blur-sm border border-gray-900 p-1.5 rounded-3xl shadow-2xl transition-all duration-300 hover:border-gray-800">
             <div className="bg-black border border-gray-900/80 rounded-2xl p-6 sm:p-8 space-y-6">
@@ -431,7 +466,12 @@ function TransformationsSection() {
                 <div><h4 className="text-white font-black tracking-wide uppercase text-sm">Marcus T. <span className="text-gray-600 font-normal">/ 32</span></h4><p className="text-xs text-gray-500 font-medium mt-1">Software Engineer</p></div>
                 <span className="inline-block bg-emerald-500/10 text-emerald-400 text-[10px] font-black tracking-widest uppercase px-3 py-1.5 rounded-lg border border-emerald-500/20">12 Weeks</span>
               </div>
-              <BeforeAfterSlider />
+              
+              <BeforeAfterSlider 
+                beforeImage="https://images.unsplash.com/photo-1606902965551-dce093cda6e7?q=80&w=800&auto=format&fit=crop"
+                afterImage="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=800&auto=format&fit=crop"
+              />
+              
               <div className="grid grid-cols-3 gap-2 py-4 border-y border-gray-900/80">
                 <div className="text-center"><p className="text-[9px] text-gray-500 uppercase font-bold tracking-widest mb-1">Weight</p><p className="text-xl font-black text-white">-14 <span className="text-xs text-orange-500">lbs</span></p></div>
                 <div className="text-center border-l border-gray-900/80"><p className="text-[9px] text-gray-500 uppercase font-bold tracking-widest mb-1">Body Fat</p><p className="text-xl font-black text-white">-6.5 <span className="text-xs text-orange-500">%</span></p></div>
@@ -440,6 +480,7 @@ function TransformationsSection() {
               <p className="text-sm text-gray-400 italic leading-relaxed relative"><span className="text-gray-800 text-3xl font-serif absolute -top-2 -left-2">"</span>&nbsp;&nbsp;The calculated nutritional macro guides and constant accountability loops completely overhauled my baseline routine constants. Best 12 weeks of my life.</p>
             </div>
           </div>
+          
           {/* Card 2 */}
           <div className="bg-gray-950/50 backdrop-blur-sm border border-gray-900 p-1.5 rounded-3xl shadow-2xl transition-all duration-300 hover:border-gray-800">
             <div className="bg-black border border-gray-900/80 rounded-2xl p-6 sm:p-8 space-y-6">
@@ -447,7 +488,12 @@ function TransformationsSection() {
                 <div><h4 className="text-white font-black tracking-wide uppercase text-sm">Sarah L. <span className="text-gray-600 font-normal">/ 28</span></h4><p className="text-xs text-gray-500 font-medium mt-1">Marketing Director</p></div>
                 <span className="inline-block bg-emerald-500/10 text-emerald-400 text-[10px] font-black tracking-widest uppercase px-3 py-1.5 rounded-lg border border-emerald-500/20">16 Weeks</span>
               </div>
-              <BeforeAfterSlider />
+              
+              <BeforeAfterSlider 
+                beforeImage="https://images.unsplash.com/photo-1549476464-37392f717541?q=80&w=800&auto=format&fit=crop"
+                afterImage="https://images.unsplash.com/photo-1571019614242-c5c5adee9f50?q=80&w=800&auto=format&fit=crop"
+              />
+              
               <div className="grid grid-cols-3 gap-2 py-4 border-y border-gray-900/80">
                 <div className="text-center"><p className="text-[9px] text-gray-500 uppercase font-bold tracking-widest mb-1">Weight</p><p className="text-xl font-black text-white">-8 <span className="text-xs text-orange-500">lbs</span></p></div>
                 <div className="text-center border-l border-gray-900/80"><p className="text-[9px] text-gray-500 uppercase font-bold tracking-widest mb-1">Body Fat</p><p className="text-xl font-black text-white">-9.0 <span className="text-xs text-orange-500">%</span></p></div>
@@ -456,12 +502,12 @@ function TransformationsSection() {
               <p className="text-sm text-gray-400 italic leading-relaxed relative"><span className="text-gray-800 text-3xl font-serif absolute -top-2 -left-2">"</span>&nbsp;&nbsp;The automated reservation schedules make checking in simple and clear. I stopped guessing and started following the data. The results speak for themselves.</p>
             </div>
           </div>
+
         </div>
       </div>
     </section>
   );
 }
-
 // ==========================================
 // 7. COMMUNITY & SOCIAL HANDLES SECTION
 // ==========================================
