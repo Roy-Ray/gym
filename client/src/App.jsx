@@ -468,8 +468,8 @@ function TransformationsSection() {
               </div>
               
               <BeforeAfterSlider 
-                beforeImage="https://images.unsplash.com/photo-1606902965551-dce093cda6e7?q=80&w=800&auto=format&fit=crop"
-                afterImage="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=800&auto=format&fit=crop"
+                beforeImage="https://www.shutterstock.com/image-photo/woman-before-after-weight-loss-600nw-2617709191.jpg"
+                afterImage="https://www.shutterstock.com/image-photo/woman-before-after-weight-loss-600nw-2617709191.jpg"
               />
               
               <div className="grid grid-cols-3 gap-2 py-4 border-y border-gray-900/80">
@@ -490,8 +490,8 @@ function TransformationsSection() {
               </div>
               
               <BeforeAfterSlider 
-                beforeImage="https://images.unsplash.com/photo-1549476464-37392f717541?q=80&w=800&auto=format&fit=crop"
-                afterImage="https://images.unsplash.com/photo-1571019614242-c5c5adee9f50?q=80&w=800&auto=format&fit=crop"
+                beforeImage="https://static.boredpanda.com/blog/wp-content/uploads/2017/05/before-after-body-building-fitness-transformation-71-591a99bea2572__700.jpg"
+                afterImage="https://static.boredpanda.com/blog/wp-content/uploads/2017/05/before-after-body-building-fitness-transformation-71-591a99bea2572__700.jpg"
               />
               
               <div className="grid grid-cols-3 gap-2 py-4 border-y border-gray-900/80">
