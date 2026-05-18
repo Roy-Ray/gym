@@ -6,7 +6,7 @@ export default function FeaturesSection() {
   useEffect(() => {
     const fetchPlans = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/plans');
+        const response = await fetch('https://ironpath-api.onrender.com/api/leads');
         const data = await response.json();
         setPlans(data);
       } catch (error) {

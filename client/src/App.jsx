@@ -329,7 +329,7 @@ function FeaturesAndPlansSection() {
   const [isAnnual, setIsAnnual] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/plans")
+    fetch("https://ironpath-api.onrender.com/api/plans")
       .then((res) => res.json())
       .then((data) => { if (Array.isArray(data)) setDbPlans(data); })
       .catch(() => console.log("Using built-in layout premium fallbacks."));
