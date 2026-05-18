@@ -165,7 +165,7 @@ function HeroSection() {
     <section id="hero" className="relative text-white min-h-[85vh] flex items-center overflow-hidden py-16 px-6 lg:px-16">
       <div className="absolute inset-0 z-0 overflow-hidden bg-black">
         <video autoPlay loop muted playsInline className="w-full h-full object-cover opacity-40 scale-105">
-          <source src="/gym-bg.mp4.mp4" type="video/mp4" />
+          <source src="https://res.cloudinary.com/dlvpmxac5/video/upload/v1779115642/gym-bg.mp4_hva7h2.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/80"></div>

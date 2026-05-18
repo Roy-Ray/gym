@@ -13,3 +13,18 @@ const pool = mysql.createPool({
 });
 
 module.exports = pool;
+const db = mysql.createPool({
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || 'NewStrong@123',
+  database: process.env.DB_NAME || 'employeemanagementdb',
+  port: process.env.DB_PORT || 3306,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+  // 👇 THIS IS THE FIX FOR AIVEN/RENDER
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
+module.exports = db;
